@@ -39,14 +39,7 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu"  role="button"><i class="fas fa-bars"></i></a>
       </li>
-
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="">Back</a>
-        </li>
-
-        </ol>
-
+        <div class="col-sm-6">
     </ul>
   </nav>
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -90,7 +83,7 @@
                             &nbsp; Global Data</a>
                     </li>
                     <li>
-                        <a href="logout.php"><i class="fa fa-power-off"></i>
+                        <a href="{{route('login.index')}}"><i class="fa fa-power-off"></i>
                             &nbsp; Logout</a>
                     </li>
 
@@ -116,7 +109,7 @@
 
 
         <div class="row">
-            <a href="cashier.php" class="dashboard-module">
+            <a href="Pharmacist.php" class="dashboard-module">
                 <img src="images/cashier_icon.png" width="96" height="96" alt="edit" />
                 <span> Pharmacist </span>
             </a>

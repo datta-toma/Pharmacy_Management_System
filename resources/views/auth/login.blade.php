@@ -7,18 +7,31 @@
 
 
 <div class="block mx-auto my-12 p-8 bg-white w-1/3 border boder-gray-200 rounded-lg shadow-lg">
-    <h1 class="text-3xl text-center font-bold">Login</h1>
-    <form class="mt-4" method="Post" action=" {{route('login.action')}}">
+    <h1 class="text-3xl text-center font-bold">Login</h1><br>
+
+    <p class=" alert-danger"><?php
+        $exception=Session::get('exception');
+
+        if($exception)
+        {
+            echo $exception;
+            Session::put('exception',null);
+
+        }
+        ?></p>
+
+
+      <form class="mt-4" method="Post" action=" {{route('login.admin')}}">
         @csrf
 
         <input type="text" class="border border-gray-200 rounded-md bg-gray-200 w-full text-lg
-        placeholder-gray-900 p-2 my-2 focus:bg-white" placeholder="Username" id="name" name="name">
+        placeholder-gray-900 p-2 my-2 focus:bg-white" placeholder="Username" id="name" name="admin_username">
 
         <input type="email" class="border border-gray-200 rounded-md bg-gray-200 w-full text-lg
-        placeholder-gray-900 p-2 my-2 focus:bg-white" placeholder="Email" id="email" name="email">
+        placeholder-gray-900 p-2 my-2 focus:bg-white" placeholder="Email" id="email" name="admin_email">
 
         <input type="password" class="border border-gray-200 rounded-md bg-gray-200 w-full text-lg
-        placeholder-gray-900 p-2 my-2 focus:bg-white" placeholder="Password" id="password" name="password">
+        placeholder-gray-900 p-2 my-2 focus:bg-white" placeholder="Password" id="password" name="admin_password">
 
 
         <button type="submit" class="rounded-md bg-indigo-500 w-full text-lg text-white font-semibold

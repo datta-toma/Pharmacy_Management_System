@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhyAuthController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +23,12 @@ Route::get('/register',[PhyAuthController::class,'registration'])->name('registe
 Route::post('/login_action',[PhyAuthController::class,'onSuccess'])->name('login.action');
 Route::post('/register_action',[PhyAuthController::class,'onSuccess'])->name('register.action');
 
-//dashboard
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-});
+//admin login..
+Route::post('/admin_login', [AdminController::class, 'login_dashboard'])->name('login.admin');
+Route::get('/admin_dashboard', [AdminController::class, 'admin_dashboard'])->name('dashboard.admin');
+
+//admin logout..
+Route::get('logout', [AdminController::class, 'flush']);
 
 Route::get('/cashier', function () {
     return view('cashier.dashboard');
@@ -36,3 +39,5 @@ Route::get('/manager', function () {
 Route::get('/pharmacist', function () {
     return view('pharmacist.dashboard');
 });
+
+
