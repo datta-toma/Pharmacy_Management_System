@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PhyAuthController;
-use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShowControllers;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,29 +16,18 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', function () {
-    return view('layouts/home');
+    return view('welcome');
 });
-Route::get('/login',[PhyAuthController::class,'login'])->name('login.index');
-Route::get('/register',[PhyAuthController::class,'registration'])->name('register.index');
 
-Route::post('/login_action',[PhyAuthController::class,'onSuccess'])->name('login.action');
-Route::post('/register_action',[PhyAuthController::class,'onSuccess'])->name('register.action');
+Auth::routes();
 
-//admin login..
-Route::post('/admin_login', [AdminController::class, 'login_dashboard'])->name('login.admin');
-Route::get('/admin_dashboard', [AdminController::class, 'admin_dashboard'])->name('dashboard.admin');
+Route::get('/home', 'HomeController@index')->name('home');
 
-//admin logout..
-Route::get('logout', [AdminController::class, 'flush']);
+Route::get('/profile/{id}',['as'=>'profile','uses'=>'HomeController@userProfile']);
 
-Route::get('/cashier', function () {
-    return view('cashier.dashboard');
-});
-Route::get('/manager', function () {
-    return view('manager.dashboard');
-});
-Route::get('/pharmacist', function () {
-    return view('pharmacist.dashboard');
-});
+Route::post('/updateing_profile',['as'=>'update.profile','uses'=>'HomeController@updateProfile']);
+
+Route::get('/list_of_products',[ 'as'=>'show.medicine', 'uses'=>'ShowController@showMedicine']);
+
 
 
