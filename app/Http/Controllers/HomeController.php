@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use DB;
+use App\Models\Medicine;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use App\customValidatior;
@@ -44,6 +45,38 @@ class HomeController extends Controller
     public function userProfile($id){
 
         return view('pages.profile');
+    }
+
+    public function createProduct(Request $request){
+
+        $data=$request->all();
+
+
+            if($data['submit']!=null && $data['submit']!=""){
+                $product = new Medicine();
+                $product->User_Id = Auth::user()->id;
+                $product->Medicine_Name  = $data['medicine_name'];
+                $product->Generic_Name = $data['generic_name'];
+                $product->Company =$data['medicine_company'];
+                $product->Price_Rate =(float)$data['price_rate'];
+                $product->Placed_On = $data['placed_on'];
+                $product->Quantity = (int) $data['quantity'];
+                $product->Status =$data['status'] == "Available" ? true : false;
+
+
+                if($product->save()){
+                    return redirect()->route('_addProduct')
+                        ->with('success', 'Medicine added successfully');
+                }else{
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Failed to add a product!');
+                }
+        }
+        else{
+            return redirect()->route('_addProduct');
+        }
+
     }
 
     public function updateProfile(Request $request){

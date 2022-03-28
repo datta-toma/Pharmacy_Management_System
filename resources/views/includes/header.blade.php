@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tapos
- * Date: 3/12/2017
- * Time: 5:21 PM
- */
 
 ?>
 <div  class="row">

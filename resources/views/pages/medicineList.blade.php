@@ -31,6 +31,55 @@ $error=Session::get('error');
                 @if($success!=null)<div align="center" ><h4>{{$success}}</h4></div>@endif
                 @if($error!=null)<div align="center" ><h4>{{$error}}</h4></div>@endif
                 <div align="center" class="panel-heading"><h3>List of Medicines</h3></div>
+
+                <div class="panel-body">
+                    <table  id='datatable' class="table table-striped jambo_table table-bordered">
+                        <thead>
+                        <tr class="headings">
+                            <th class="column-title alignment">Medicine Name</th>
+                            <th class="column-title alignment">Generic Name</th>
+                            <th class="column-title alignment">Company</th>
+                            <th class="column-title alignment">Price Rate</th>
+                            <th class="column-title alignment">Placed On</th>
+                            <th class="column-title alignment">Quantity</th>
+                            <th class="column-title alignment">Status</th>
+                            @if(Auth::guest()==false)
+                            <th class="column-title alignment">#</th>
+                            <th class="column-title alignment">#</th>
+                            @endif
+
+                        </thead>
+
+                        <tbody>
+                            @foreach($medicineData as $item)
+                                <tr >
+                                    <td class="alignment">{{$item->Medicine_Name}}</td>
+                                    <td class="alignment">{{$item->Generic_Name}}</td>
+                                    <td class="alignment">{{$item->Company}}</td>
+                                    <td class="alignment">{{$item->Price_Rate}}</td>
+                                    <td class="alignment">{{$item->Placed_On}}</td>
+                                    <td class="alignment">{{$item->Quantity}}</td>
+                                    <td class="alignment">{{$item->Status == true ? "Available" : "Not-Available"}}</td>
+                                     @if(Auth::guest()==false)
+
+                                    <form class="form-horizontal" action="{{route('edit.medicine', ['$id', $item->id] )}}" method="GET">
+                                        {{ csrf_field() }}
+                                        <td class=" alignment"><button type="submit" class="btn btn-info"> Edit</button></td>
+                                    </form>
+
+                                   <form class="form-horizontal" id="deleteData" action="{{route('delete.medicine')}}" method="POST" >
+                                       {{ csrf_field() }}
+                                        <input type="hidden" value="{{$item->id}}" name="_id_">
+                                        <td class=" alignment"><button type="submit" class="btn btn-danger" name="submit" onclick="return confirmFunction();" value="delete_submit"> Delete</button></td>
+                                    </form>
+
+                                     @endif
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
