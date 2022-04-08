@@ -88,8 +88,10 @@
                             {{ Auth::user()->name }}
                         </a></li>
 
+                    <li style="float: right;"><a href="{{url('/purchase_list')}}">Create Memo</a></li>
                     <li style="float: right;"><a href="{{url('/list_of_products')}}">Medicines</a></li>
                     <li style="float: right;"><a href="{{url('/addProduct')}}">Add Medicine</a></li>
+
                 @endif
 
             <!-- Authentication Links -->

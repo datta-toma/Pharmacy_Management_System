@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use DB;
 use App\Models\Medicine;
+use App\Models\PurchaseList;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use App\customValidatior;
@@ -46,6 +47,16 @@ class HomeController extends Controller
 
         return view('pages.profile');
     }
+
+    public function tempPurchaseList(){
+
+        $user_id=Auth::user()->id;
+
+       $medicineData=Medicine::select('id','medicine_name')->where('User_Id',$user_id)->get();
+       $tempPurchaseList=PurchaseList::get();
+
+       return View::make('pages.purchase', compact('medicineData','tempPurchaseList'));
+   }
 
     public function createProduct(Request $request){
 
@@ -115,6 +126,32 @@ class HomeController extends Controller
         }
         else{
             return redirect()->route('home');
+        }
+    }
+    public function createTempList(Request $request){
+        $data=$request->all();
+        if($data['submit']!=null && $data['submit']!=""){
+            $medicine=Medicine::where('id',$data['selected_medicine'])->first();
+            $quantity=intval($data['quantity']);
+            $price=floatval($medicine->Price_Rate)*$quantity;
+
+            $temp=new PurchaseList();
+            $temp->Medicine_Name=$medicine->Medicine_Name;
+            $temp->Quantity=$quantity;
+            $temp->Price=$price;
+            $temp->Order_Id=1;
+            if($temp->save()){
+                return redirect()->route('purchase.list')
+                    ->with('success','Medicine addded successfully to list');
+
+            }else{
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Failed to added!');
+            }
+        }
+        else{
+            return redirect()->route('purchase.list');
         }
     }
 

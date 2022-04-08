@@ -27,6 +27,8 @@ Route::get('/addProduct',['as'=>'_addProduct','uses'=>'HomeController@addProduct
 
 Route::post('/addProduct',['as'=>'add.product','uses'=>'HomeController@createProduct']);
 
+Route::post('/purchase_list',['as'=>'create.temp.list','uses'=>'HomeController@createTempList']);
+
 Route::get('/profile/{id}',['as'=>'profile','uses'=>'HomeController@userProfile']);
 
 Route::post('/updateing_profile',['as'=>'update.profile','uses'=>'HomeController@updateProfile']);
@@ -40,4 +42,12 @@ Route::post('/update_medicine_info',['as'=>'update', 'uses'=>'ShowController@upd
 Route::post('/delete_medicine_info',[ 'as'=>'delete.medicine', 'uses'=>'ShowController@deleteMedicine']);
 
 Route::get('/list_of_products',[ 'as'=>'show.medicine', 'uses'=>'ShowController@showMedicine']);
+
+ Route::get('/purchase_list',[ 'as'=>'purchase.list', 'uses'=>'HomeController@tempPurchaseList']);
+
+Route::get('/create_a_memo',[ 'as'=>'create.memo', 'uses'=>'HomeController@createMemo']);
+
+Route::post('/delete_list',['as'=>'delete.list','uses'=>'HomeController@deleteList']);
+
+Route::post('/delete_list_all',['as'=>'delete.list.all','uses'=>'HomeController@deleteListAll']);
 
