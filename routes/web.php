@@ -50,4 +50,4 @@ Route::get('/create_a_memo',[ 'as'=>'create.memo', 'uses'=>'HomeController@creat
 Route::post('/delete_list',['as'=>'delete.list','uses'=>'HomeController@deleteList']);
 
 Route::post('/delete_list_all',['as'=>'delete.list.all','uses'=>'HomeController@deleteListAll']);
-
+Route::post('/save_memo',['as'=>'save.memo','uses'=>'HomeController@saveMemos']);

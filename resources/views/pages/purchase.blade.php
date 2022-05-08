@@ -90,7 +90,11 @@ $error=Session::get('error');
                                     </tbody>
                                 </table>
                             </div>
+                            <div align="right">
 
+                                <br/>
+                                <button class="btn btn-primary"><a href="{{route('create.memo')}}">Next</a></button>
+                            </div>
                         @endif
                     </div>
                 </div>

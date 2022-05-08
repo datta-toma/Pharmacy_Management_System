@@ -154,5 +154,60 @@ class HomeController extends Controller
             return redirect()->route('purchase.list');
         }
     }
+    public function deleteList(Request $request){
+        $data=$request->all();
+        if($data['submit']!=null && $data['submit']!=""){
+
+            $temp=PurchaseList::findOrFail($data['_id_']);
+            if($temp->delete()){
+                return redirect()->route('purchase.list')
+                    ->with('success','Deleted successfully');
+
+            }else{
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Failed to delete!');
+            }
+        }
+        else{
+            return redirect()->route('purchase.list');
+        }
+    }
+
+    public function deleteListAll(Request $request){
+        $data=$request->all();
+        if($data['submit']!=null && $data['submit']!=""){
+
+            if(PurchaseList::truncate()){
+                return redirect()->route('purchase.list')
+                    ->with('success','Cleaned successfully');
+
+            }else{
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Failed to clean!');
+            }
+        }
+        else{
+            return redirect()->route('purchase.list');
+        }
+    }
+    public function createMemo(){
+
+        $tempPurchaseList=PurchaseList::get();
+
+       if(sizeof($tempPurchaseList)>0){
+           $totalPrice=0.0;
+            foreach ($tempPurchaseList as $item){
+                $totalPrice=$totalPrice+ floatval($item->Price);
+            }
+            $orderId = floor(microtime(true) * 1000);
+
+           return View::make('pages.memo', compact('tempPurchaseList','totalPrice', 'orderId'));
+        }
+        else{
+            redirect()->route('purchase.list');
+        }
+    }
 
 }
