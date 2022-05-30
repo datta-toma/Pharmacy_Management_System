@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMemoTable extends Migration
+class CreateCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateMemoTable extends Migration
      */
     public function up()
     {
-        Schema::create('memo', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('Customer_Id');
-            $table->float('Total_Price');
-            $table->float('Paid_Amount');
-            $table->integer('Order_Id');
+            $table->string('Customer_Name');
+            $table->bigInteger('Phone_No');
+            $table->string('Address');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateMemoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('memo');
+        Schema::dropIfExists('customers');
     }
 }

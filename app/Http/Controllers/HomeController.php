@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\View;
 use DB;
 use App\Models\Medicine;
 use App\Models\PurchaseList;
+use App\Models\Memo;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use App\customValidatior;
@@ -207,6 +209,61 @@ class HomeController extends Controller
         }
         else{
             redirect()->route('purchase.list');
+        }
+    }
+    public function saveMemos(Request $request)
+    {
+        $data = $request->all();
+        if ($data['submit'] != null && $data['submit'] != "") {
+            $coustomer = Customer::where('Customer_Name', '=', $data['customer_name'])
+                ->where('Phone_No', '=', $data['phone_no'])
+                ->where('Address', '=', $data['address'])
+                ->first();
+            $customerID = -1;
+            if ($coustomer == null) {
+                $newCustomer = new Customer();
+                $newCustomer->Customer_Name = $data['customer_name'];
+                $newCustomer->Phone_No = $data['phone_no'];
+                $newCustomer->Address = $data['address'];
+                $newCustomer->save();
+                $customerID = $newCustomer->id;
+            } else {
+                $customerID = $coustomer->id;
+            }
+
+            date_default_timezone_set('Asia/Dhaka');
+            $tempPurchaseList = PurchaseList::where('Order_Id', 1)->get();
+            $k = 0;
+            $itemList = "";
+            foreach ($tempPurchaseList as $item) {
+                if ($k != 0) {
+                    $itemList .= ",";
+                }
+                $item->Order_Id = $data['order_id'];
+                $item->save();
+                $itemList .= $item->medicine_name . " (" . $item->quantity . ") ";
+                $k++;
+            }
+
+            $history = new Memo();
+            $history->User_Id = Auth::user()->id;
+            $history->Order_Id = $data['order_id'];
+            $history->Customer_Id = $customerID;
+            $history->Total_Price = $data['total_price'];
+            $history->Paid_Amount = $data['paid_amount'];
+            $history->Item_List = $itemList;
+            $history->Posted = date('Y-m-d H:i:s');
+
+            if ($history->save()) {
+                return redirect()->route('home')
+                    ->with('success', 'Memo recorded successfully');
+            } else {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Failed to record!');
+            }
+        } else {
+            return redirect()->route('purchase.list');
         }
     }
 
