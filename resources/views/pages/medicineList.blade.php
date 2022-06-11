@@ -62,7 +62,7 @@ $error=Session::get('error');
                                     <td class="alignment">{{$item->Status == true ? "Available" : "Not-Available"}}</td>
                                      @if(Auth::guest()==false)
 
-                                    <form class="form-horizontal" action="{{route('edit.medicine', ['$id', $item->id] )}}" method="GET">
+                                    <form class="form-horizontal" action="{{route('edit.medicine', ['id'=> $item->id] )}}" method="GET">
                                         {{ csrf_field() }}
                                         <td class=" alignment"><button type="submit" class="btn btn-info"> Edit</button></td>
                                     </form>

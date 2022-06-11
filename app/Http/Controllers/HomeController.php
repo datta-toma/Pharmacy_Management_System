@@ -14,6 +14,7 @@ use App\Models\Medicine;
 use App\Models\PurchaseList;
 use App\Models\Memo;
 use App\Models\Customer;
+use App\lib\History;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 use App\customValidatior;
@@ -241,7 +242,7 @@ class HomeController extends Controller
                 }
                 $item->Order_Id = $data['order_id'];
                 $item->save();
-                $itemList .= $item->medicine_name . " (" . $item->quantity . ") ";
+                $itemList .= $item->Medicine_Name . " (" . $item->quantity . ") ";
                 $k++;
             }
 
@@ -265,6 +266,34 @@ class HomeController extends Controller
         } else {
             return redirect()->route('purchase.list');
         }
+    }
+    public function showMemos()
+    {
+        $histories = Memo::orderBy('Posted', 'desc')->get();
+        $makeHistories = array_fill(0, sizeof($histories), new History());
+        $ind = 0;
+        foreach ($histories as $history) {
+            $makeHistory = new History();
+            //fetch the customer info at first
+            $customer = Customer::where('id', '=', $history->Customer_Id)->first();
+
+            if($customer != null){
+                $makeHistory->customerName = $customer->Customer_Name;
+                $makeHistory->customerPhone = $customer->Phone_No;
+                $makeHistory->customerAddress = $customer->Address;
+            }
+
+            $makeHistory->totalPrice = $history->Total_Price;
+            $makeHistory->PaidAmount = $history->Paid_Amount;
+            $makeHistory->orderId = $history->Order_Id;
+            $makeHistory->itemList = $history->Item_List;
+            $makeHistory->date = $history->Posted;
+
+            $makeHistories[$ind++] = $makeHistory;
+        }
+
+
+        return view('pages.history', compact('makeHistories'));
     }
 
 }

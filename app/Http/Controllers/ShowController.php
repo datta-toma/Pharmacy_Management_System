@@ -23,7 +23,6 @@ class ShowController extends Controller
         return View::make('pages.medicineList', compact('medicineData'));
     }
     public function editMedicine($id){
-
     	$medicineEditData = Medicine::findOrFail($id);
         return View::make('pages.edit', compact('medicineEditData'));
 
@@ -46,12 +45,13 @@ class ShowController extends Controller
     public function updateMedicine(Request $request){
     	$data=$request->all();
 
+
     	if($data['submit']!=null && $data['submit']!=""){
     			$id=$data['_id_'];
                 $product =Medicine::findOrFail($id);
                 $product->medicine_name  = $data['medicine_name'];
                 $product->generic_name = $data['generic_name'];
-                $product->medicine_company =$data['medicine_company'];
+                $product->medicine_company =$data['company'];
                 $product->price_rate =$data['price_rate'];
                 $product->placed_on =$data['placed_on'];
                 $product->status =$data['status'];

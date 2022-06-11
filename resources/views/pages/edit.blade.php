@@ -27,12 +27,12 @@ $data=$medicineEditData;
                     <div align="center">
                         <br/>
                         <form class="form" method="POST" action="{{route('update')}}">
-                            <input type="hidden" name="_id_" value="{{$data->_id}}">
+                            <input type="hidden" name="_id_" value="{{$data->id}}">
                              {{ csrf_field() }}
                             <div  class="form-group">
                                    <label class="control-label col-md-5 alignment">Medicine Name</label>
                                 <diV class="col-md-5">
-                                    <input type="text" class="form-control col-md-12" value="{{$data->medicine_name}}" name="medicine_name" required="">
+                                    <input type="text" class="form-control col-md-12" value="{{$data->Medicine_Name}}" name="medicine_name" required="">
 
                                 </diV>
                                 <br/>
@@ -42,7 +42,7 @@ $data=$medicineEditData;
                              <div  class="form-group">
                                    <label class="control-label col-md-5 alignment">Generic Name</label>
                                 <diV class="col-md-5">
-                                    <input type="text" class="form-control col-md-12" value="{{$data->generic_name}}" name="generic_name" required="">
+                                    <input type="text" class="form-control col-md-12" value="{{$data->Generic_Name}}" name="generic_name" required="">
 
                                 </diV>
                                 <br/>
@@ -51,9 +51,9 @@ $data=$medicineEditData;
                             </div>
 
                             <div  class="form-group">
-                                   <label class="control-label col-md-5 alignment">Medicine Company</label>
+                                   <label class="control-label col-md-5 alignment"> Company</label>
                                 <diV class="col-md-5">
-                                    <input type="text" class="form-control col-md-12" value="{{$data->medicine_company}}" name="medicine_company" required="">
+                                    <input type="text" class="form-control col-md-12" value="{{$data->Company}}" name="company" required="">
 
                                 </diV>
                                 <br/>
@@ -61,20 +61,30 @@ $data=$medicineEditData;
                             </div>
 
                             <div  class="form-group">
-                                   <label class="control-label col-md-5 alignment">Price rate</label>
+                                   <label class="control-label col-md-5 alignment">Price Rate</label>
                                 <diV class="col-md-5">
-                                    <input type="text" class="form-control col-md-12"value="{{$data->price_rate}}" name="price_rate" required="">
+                                    <input type="text" class="form-control col-md-12"value="{{$data->Price_Rate}}" name="price_rate" required="">
 
                                 </diV>
                                 <br/>
                                 <br/>
 
                             </div>
+                            <div  class="form-group">
+                                <label class="control-label col-md-5 alignment">Quantity</label>
+                             <diV class="col-md-5">
+                                 <input type="text" class="form-control col-md-12"value="{{$data->Quantity}}" name="price_rate" required="">
+
+                             </diV>
+                             <br/>
+                             <br/>
+
+                         </div>
 
                             <div  class="form-group">
-                                   <label class="control-label col-md-5 alignment">Placed on</label>
+                                   <label class="control-label col-md-5 alignment">Placed On</label>
                                 <diV class="col-md-5">
-                                    <input type="text" class="form-control col-md-12" value="{{$data->placed_on}}"  name="placed_on" required="">
+                                    <input type="text" class="form-control col-md-12" value="{{$data->Placed_On}}"  name="placed_on" required="">
 
                                 </diV>
                                 <br/>
